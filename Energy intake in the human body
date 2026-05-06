@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotebookLM Student Masterclass</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .step-card { transition: all 0.3s ease; }
+        .step-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .copy-toast { visibility: hidden; opacity: 0; transition: opacity 0.3s; }
+        .copy-toast.show { visibility: visible; opacity: 1; }
+        .question-selected { border-color: #4f46e5 !important; background-color: #f5f3ff !important; }
+        textarea { resize: vertical; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+
+    <!-- Navigation Header -->
+    <nav class="bg-indigo-700 text-white p-4 sticky top-0 z-50 shadow-md">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold flex items-center gap-2">
+                <i class="fas fa-book-open"></i> NotebookLM Student Guide
+            </h1>
+            <div class="flex items-center gap-4">
+                <div id="saveStatus" class="text-[10px] font-bold uppercase tracking-widest opacity-80 flex items-center gap-2">
+                    <i class="fas fa-circle-notch fa-spin"></i> <span>Initializing...</span>
+                </div>
+                <div class="text-sm font-medium bg-indigo-800 px-3 py-1 rounded-full">
+                    Learning Journey
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto p-6 space-y-12">
+        
+        <!-- SECTION 1: WATCH & LEARN -->
+        <section id="section1" class="space-y-6">
+            <div class="flex items-center gap-3 border-b-2 border-indigo-100 pb-2">
+                <span class="bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">1</span>
+                <h2 class="text-2xl font-bold text-indigo-900">Watch & Observe</h2>
+            </div>
+            
+            <div class="grid lg:grid-cols-5 gap-6">
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200">
+                        <div class="aspect-video bg-slate-900 flex flex-col items-center justify-center text-white p-4 text-center">
+                            <i class="fab fa-youtube text-5xl mb-2 text-red-500"></i>
+                            <p class="font-bold">Watch the YouTube Video</p>
+                            <p class="text-xs text-slate-400">Pay close attention to how the concepts of cellular energy are visualized.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                        <p class="text-xs font-bold text-slate-400 uppercase mb-2 tracking-wider">Mitochondria Anatomy</p>
+                        <div class="bg-slate-900 rounded-lg p-4 border border-slate-800 flex items-center justify-center overflow-hidden">
+                            <svg viewBox="0 0 240 160" class="w-full h-auto drop-shadow-lg">
+                                <ellipse cx="120" cy="80" rx="100" ry="60" fill="#f472b6" stroke="#db2777" stroke-width="3" opacity="0.9"/>
+                                <path d="M40,80 C40,40 70,40 70,60 C70,40 100,40 100,60 C100,40 130,40 130,60 C130,40 160,40 160,60 C160,40 200,40 200,80 C200,120 160,120 160,100 C160,120 130,120 130,100 C130,120 100,120 100,100 C100,120 70,120 70,100 C70,120 40,120 40,80 Z" fill="#fb923c" stroke="#ea580c" stroke-width="2.5"/>
+                                <circle cx="120" cy="80" r="1.5" fill="#fef08a"/><circle cx="100" cy="70" r="1.5" fill="#fef08a"/>
+                                <circle cx="140" cy="90" r="1.5" fill="#fef08a"/><circle cx="80" cy="90" r="1.5" fill="#fef08a"/>
+                                <path d="M110,75 Q115,65 125,75 T140,75" fill="none" stroke="#4ade80" stroke-width="1.5"/>
+                                <path d="M100,85 Q110,95 120,85 T140,85" fill="none" stroke="#4ade80" stroke-width="1.5"/>
+                                <text x="120" y="150" text-anchor="middle" font-size="11" fill="white" font-weight="bold" font-family="sans-serif">The Powerhouse of the Cell</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 h-full">
+                        <h3 class="text-lg font-semibold mb-4 text-slate-700">Reflective Observation</h3>
+                        <p class="text-sm text-slate-500 mb-6">Use these sentence starters to document your insights:</p>
+                        
+                        <div class="space-y-4" id="reflectiveSection">
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 space-y-2">
+                                <p class="text-sm font-medium text-indigo-700">1. After watching the video, I discovered that...</p>
+                                <textarea data-key="refl1_ans" class="cloud-save w-full p-2 text-sm rounded border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none" rows="2" placeholder="Type here..."></textarea>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-slate-400 font-bold whitespace-nowrap uppercase">Why this was important:</span>
+                                    <input type="text" data-key="refl1_imp" class="cloud-save bg-transparent border-b border-slate-200 text-[10px] text-slate-500 italic w-full focus:border-indigo-400 outline-none" placeholder="Explain the significance...">
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 space-y-2">
+                                <p class="text-sm font-medium text-indigo-700">2. One interesting fact I learned was...</p>
+                                <textarea data-key="refl2_ans" class="cloud-save w-full p-2 text-sm rounded border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none" rows="2" placeholder="Type here..."></textarea>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-slate-400 font-bold whitespace-nowrap uppercase">Why this was important:</span>
+                                    <input type="text" data-key="refl2_imp" class="cloud-save bg-transparent border-b border-slate-200 text-[10px] text-slate-500 italic w-full focus:border-indigo-400 outline-none" placeholder="Explain the significance...">
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 space-y-2">
+                                <p class="text-sm font-medium text-indigo-700">3. The information has me wondering...</p>
+                                <textarea data-key="refl3_ans" class="cloud-save w-full p-2 text-sm rounded border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none" rows="2" placeholder="Type here..."></textarea>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-slate-400 font-bold whitespace-nowrap uppercase">Why this was important:</span>
+                                    <input type="text" data-key="refl3_imp" class="cloud-save bg-transparent border-b border-slate-200 text-[10px] text-slate-500 italic w-full focus:border-indigo-400 outline-none" placeholder="Explain the significance...">
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 space-y-2">
+                                <p class="text-sm font-medium text-indigo-700">4. Regarding the academic content, a key concept explained was...</p>
+                                <textarea data-key="refl4_ans" class="cloud-save w-full p-2 text-sm rounded border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none" rows="2" placeholder="Type here..."></textarea>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-slate-400 font-bold whitespace-nowrap uppercase">Why this was important:</span>
+                                    <input type="text" data-key="refl4_imp" class="cloud-save bg-transparent border-b border-slate-200 text-[10px] text-slate-500 italic w-full focus:border-indigo-400 outline-none" placeholder="Explain the significance...">
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 space-y-2">
+                                <p class="text-sm font-medium text-indigo-700">5. A new piece of academic information that changed my understanding is...</p>
+                                <textarea data-key="refl5_ans" class="cloud-save w-full p-2 text-sm rounded border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none" rows="2" placeholder="Type here..."></textarea>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-slate-400 font-bold whitespace-nowrap uppercase">Why this was important:</span>
+                                    <input type="text" data-key="refl5_imp" class="cloud-save bg-transparent border-b border-slate-200 text-[10px] text-slate-500 italic w-full focus:border-indigo-400 outline-none" placeholder="Explain the significance...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: CHAT INTERACTION -->
+        <section id="section2" class="space-y-6">
+            <div class="flex items-center gap-3 border-b-2 border-indigo-100 pb-2">
+                <span class="bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">2</span>
+                <h2 class="text-2xl font-bold text-indigo-900">The Power of Inquiry</h2>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-200">
+                <div class="mb-8 p-6 bg-indigo-50 rounded-xl border-2 border-indigo-100 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-lg font-bold text-indigo-900">Access Your Source Notebook</h3>
+                        <p class="text-sm text-indigo-700">Visit the curated notebook to start your chat-based inquiry.</p>
+                    </div>
+                    <a href="https://notebooklm.google.com/notebook/4200cd1d-7f86-4464-9a3d-a47957e0d572?authuser=1" target="_blank" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all">
+                        <i class="fas fa-external-link-alt"></i> Mitochondria: Powerhouse & Pedigree
+                    </a>
+                </div>
+
+                <div class="mb-8">
+                    <div class="flex justify-between items-end mb-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-slate-700">Step 1: Select 5 Questions</h3>
+                            <p class="text-slate-500 text-sm">Check the boxes of the questions you plan to ask. Click a question to copy it.</p>
+                        </div>
+                        <div class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full shadow-inner">Selected: <span id="selectionCount">0</span>/5</div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-3" id="questionList"></div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100">
+                    <h3 class="text-lg font-semibold text-slate-700 mb-2">Step 2: Summarize Your Findings</h3>
+                    <div class="grid lg:grid-cols-2 gap-6" id="summaryContainer"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: MASTERY CHECK -->
+        <section id="section3" class="space-y-6 pb-20">
+            <div class="flex items-center gap-3 border-b-2 border-indigo-100 pb-2">
+                <span class="bg-indigo-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">3</span>
+                <h2 class="text-2xl font-bold text-indigo-900">Mastery Check</h2>
+            </div>
+            
+            <div class="bg-indigo-900 text-white p-8 rounded-xl shadow-lg relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="text-xl font-bold mb-2">NotebookLM Studio Quiz</h3>
+                    <p class="text-indigo-200 mb-4">Take the quiz in NotebookLM and log your highest score below.</p>
+                    <div class="bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-white/20">
+                        <div class="flex flex-col md:flex-row items-center gap-8">
+                            <div class="text-center">
+                                <span class="text-sm uppercase tracking-widest text-indigo-300">Highest Score</span>
+                                <div class="text-6xl font-black" id="currentScore">0%</div>
+                            </div>
+                            <div class="flex-1 space-y-4 w-full">
+                                <label class="block text-sm font-medium">Log attempt:</label>
+                                <div class="flex gap-2">
+                                    <input type="number" id="scoreInput" min="0" max="100" class="flex-1 p-3 rounded bg-white text-slate-900 outline-none focus:ring-4 focus:ring-indigo-400" placeholder="Score %">
+                                    <button onclick="updateScore()" class="bg-green-500 hover:bg-green-400 px-6 py-3 rounded font-bold transition-colors">Log</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="copyToast" class="copy-toast fixed bottom-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 z-[100]">
+        <i class="fas fa-check-circle text-green-400"></i>
+        <span>Question copied to clipboard!</span>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Constants & Global State
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'nb-student-guide-v2';
+        const STORAGE_KEY = `NB_GUIDE_PROGRESS_${appId}`;
+
+        let user = null;
+        let selectedQuestions = [];
+        let summaryData = {};
+        let currentHighestScore = 0;
+
+        const questionsList = [
+            "What is the primary function of mitochondria within a cell?",
+            "How is the energy captured by plants eventually utilized by the human body?",
+            "What are chloroplasts, and how do they relate to the function of mitochondria?",
+            "Describe the physical structure of the inner mitochondrial membrane and its functional purpose.",
+            "What occurs during the process of cellular respiration?",
+            "Identify the specific reactants and products involved in cellular respiration.",
+            "Why do muscle cells typically contain a higher concentration of mitochondria than other cell types?",
+            "What is the \"symbiotic relationship\" theory regarding the origin of mitochondria?",
+            "How does the inheritance of mitochondrial DNA differ from nuclear DNA?",
+            "Why is mitochondrial DNA considered a valuable tool for tracking genetic history?"
+        ];
+
+        // --- LOCAL STORAGE HELPERS ---
+        const getLocalData = () => {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : {};
+        };
+
+        const updateLocalData = (newFields) => {
+            const existing = getLocalData();
+            const updated = { ...existing, ...newFields };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+            return updated;
+        };
+
+        // --- PERSISTENCE ---
+        const persist = async (newData) => {
+            // Save locally first
+            updateLocalData(newData);
+            
+            if (user) {
+                const statusEl = document.getElementById('saveStatus');
+                statusEl.innerHTML = '<i class="fas fa-sync fa-spin"></i> <span>Syncing...</span>';
+                
+                try {
+                    const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'progress', 'main');
+                    await setDoc(docRef, newData, { merge: true });
+                    statusEl.innerHTML = '<i class="fas fa-check-circle text-green-400"></i> <span>Synced</span>';
+                } catch (e) {
+                    statusEl.innerHTML = '<i class="fas fa-history text-orange-400"></i> <span>Offline</span>';
+                }
+            }
+        };
+
+        const hydrateUIFromData = (data) => {
+            if (!data) return;
+
+            // 1. Reflective Inputs
+            document.querySelectorAll('.cloud-save').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (data[key] !== undefined) el.value = data[key];
+            });
+
+            // 2. Score
+            if (data.highestScore !== undefined) {
+                currentHighestScore = data.highestScore;
+                document.getElementById('currentScore').innerText = `${currentHighestScore}%`;
+            }
+
+            // 3. Selection & Summaries
+            if (data.selectedQuestions) selectedQuestions = data.selectedQuestions;
+            if (data.summaryData) summaryData = data.summaryData;
+
+            renderQuestions();
+            updateSummarySlots();
+        };
+
+        // --- AUTH ---
+        const initAuth = async () => {
+            hydrateUIFromData(getLocalData());
+
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        };
+
+        onAuthStateChanged(auth, (u) => {
+            user = u;
+            if (user) {
+                const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'progress', 'main');
+                onSnapshot(docRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        const cloudData = snapshot.data();
+                        updateLocalData(cloudData);
+                        hydrateUIFromData(cloudData);
+                    }
+                }, (err) => console.error(err));
+            }
+        });
+
+        // --- UI HANDLERS ---
+        window.renderQuestions = () => {
+            const list = document.getElementById('questionList');
+            if (!list) return;
+            list.innerHTML = '';
+
+            questionsList.forEach((q, index) => {
+                const isSelected = selectedQuestions.includes(q);
+                const container = document.createElement('div');
+                container.className = `relative flex items-stretch rounded-lg border transition-all ${isSelected ? 'question-selected border-indigo-400 shadow-sm' : 'border-slate-200'}`;
+                
+                const checkBtn = document.createElement('button');
+                checkBtn.className = `w-10 flex items-center justify-center border-r transition-colors ${isSelected ? 'bg-indigo-600 text-white border-indigo-600' : 'text-slate-300 border-slate-200'}`;
+                checkBtn.innerHTML = `<i class="fas ${isSelected ? 'fa-check-square' : 'fa-square'}"></i>`;
+                checkBtn.onclick = () => {
+                    if (isSelected) {
+                        selectedQuestions = selectedQuestions.filter(item => item !== q);
+                    } else if (selectedQuestions.length < 5) {
+                        selectedQuestions.push(q);
+                    }
+                    persist({ selectedQuestions });
+                    renderQuestions();
+                    updateSummarySlots();
+                };
+
+                const copyBtn = document.createElement('button');
+                copyBtn.className = "flex-1 text-left p-3 hover:bg-indigo-50/50 transition-colors text-[11px] flex items-start gap-3 group";
+                copyBtn.innerHTML = `
+                    <span class="text-indigo-400 font-bold">${index + 1}</span>
+                    <span class="text-slate-700 flex-1">${q}</span>
+                    <i class="fas fa-copy text-slate-200 group-hover:text-indigo-400"></i>
+                `;
+                copyBtn.onclick = () => {
+                    const el = document.createElement('textarea');
+                    el.value = q; document.body.appendChild(el); el.select();
+                    document.execCommand('copy'); document.body.removeChild(el);
+                    const toast = document.getElementById('copyToast');
+                    toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000);
+                };
+
+                container.append(checkBtn, copyBtn);
+                list.appendChild(container);
+            });
+            document.getElementById('selectionCount').innerText = selectedQuestions.length;
+        };
+
+        window.updateSummarySlots = () => {
+            const container = document.getElementById('summaryContainer');
+            if (!container) return;
+
+            if (selectedQuestions.length === 0) {
+                container.innerHTML = `<div class="lg:col-span-2 py-10 text-center border-2 border-dashed border-slate-100 rounded-xl text-slate-400 text-xs italic">Select 5 questions to generate summary fields.</div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            selectedQuestions.forEach((q, index) => {
+                const slot = document.createElement('div');
+                slot.className = "space-y-1";
+                slot.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <label class="text-[9px] font-bold text-indigo-500 uppercase tracking-tighter">Question Slot ${index + 1}</label>
+                    </div>
+                    <div class="p-2 bg-slate-50 border border-slate-200 rounded-t-lg text-[10px] text-slate-500 italic border-b-0 leading-tight">"${q}"</div>
+                    <textarea class="summary-field w-full p-3 rounded-b-xl border-2 border-slate-100 focus:border-indigo-400 outline-none h-24 text-sm" placeholder="Summarize findings...">${summaryData[q] || ''}</textarea>
+                `;
+                
+                const textarea = slot.querySelector('textarea');
+                textarea.oninput = (e) => {
+                    summaryData[q] = e.target.value;
+                    debounceSave('sum_sync', () => persist({ summaryData }));
+                };
+                container.appendChild(slot);
+            });
+        };
+
+        window.updateScore = () => {
+            const input = document.getElementById('scoreInput');
+            const val = parseInt(input.value);
+            if (!isNaN(val) && val >= 0 && val <= 100) {
+                if (val > currentHighestScore) {
+                    currentHighestScore = val;
+                    persist({ highestScore: val });
+                    document.getElementById('currentScore').innerText = `${val}%`;
+                }
+            }
+            input.value = '';
+        };
+
+        // Event delegation for static text inputs
+        document.querySelectorAll('.cloud-save').forEach(el => {
+            el.oninput = (e) => {
+                const key = e.target.getAttribute('data-key');
+                const val = e.target.value;
+                debounceSave(key, () => persist({ [key]: val }));
+            };
+        });
+
+        let timers = {};
+        const debounceSave = (id, fn) => {
+            clearTimeout(timers[id]);
+            timers[id] = setTimeout(fn, 800);
+        };
+
+        initAuth();
+    </script>
+</body>
+</html>
